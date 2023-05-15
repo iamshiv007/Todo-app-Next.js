@@ -1,17 +1,43 @@
-import { connectDB } from "@/utils/features"
+import { asyncError, errorHandler } from "@/middlewares/error"
+
+import { connectDB, cookieSetter, generateToken } from "@/utils/features"
+
 import { User } from '../../../models/user'
 
+import bcrypt from 'bcrypt'
 
-export default async function handler(req, res) {
+
+const handler = asyncError(async (req, res) => {
+
+    if (req.method !== 'POST')
+        errorHandler(res, 400, "Only post method is allowed")
+
+    const { name, email, password } = req.body
+
+    if (!name || !email || !password) {
+        errorHandler(res, 400, "Please enter all fields")
+    }
 
     await connectDB()
 
-    try {
-        const user = await User.create(req.body)
-        res.status(201).send({ success: true, user })
+    const userExist = await User.findOne({ email })
 
-    } catch (error) {
-        res.status(500).json({ err: error })
-    }
+    if (userExist)
+        errorHandler(res, 400, "User registered with this email")
 
-}
+    const hashedPass = await bcrypt.hash(password, 10)
+
+    const user = await User.create({ name, email, password: hashedPass })
+
+    const token = generateToken(user._id)
+
+    cookieSetter(res, token, true)
+
+    res.status(201).json({
+        success: true,
+        message: "Registered Successfully",
+        user
+    })
+})
+
+export default handler
