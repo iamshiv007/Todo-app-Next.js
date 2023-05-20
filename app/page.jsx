@@ -1,10 +1,15 @@
-import React from 'react'
-import '../styles/app.scss'
+import React from "react";
+import "../styles/app.scss";
+import Form from "./addTodoForm";
+import Todos from "./todos";
 
 const Page = () => {
   return (
-    <div>Page</div>
-  )
-}
+    <div>
+      <Form />
+      <Todos />
+    </div>
+  );
+};
 
-export default Page
+export default Page;

@@ -1,13 +1,25 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
+import "../../styles/app.scss";
+import axios from "axios";
 
 const Page = () => {
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const loginHandler = () => {};
+  const loginHandler = async(e) => {
+    e.preventDefault()
+    try {
+      const { data } = await axios.post("/api/auth/login", { email, password });
+console.log(data)
+      if (data.success) {
+        alert("Logged In Successfully");
+      }
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
+  };
 
   return (
     <div className="login">

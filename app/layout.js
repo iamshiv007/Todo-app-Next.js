@@ -1,3 +1,4 @@
+import { ContextProvider } from "@/components/clients"
 import Header from "./header"
 
 export const metadata = {
@@ -10,13 +11,15 @@ export default function RootLayout({ children }) {
     <html lang="en">
 
       <body>
-        <>
-          <Header />
-          {children}
-        </>
+        <ContextProvider>
+          <>
+            <Header />
+            {children}
+          </>
+        </ContextProvider>
       </body>
 
-      
+
     </html>
   )
 }

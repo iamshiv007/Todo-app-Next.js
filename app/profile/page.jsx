@@ -1,11 +1,15 @@
 "use client";
-import React from "react";
+import { Context } from "@/components/clients";
+import React, { useContext } from "react";
+import "../../styles/app.scss";
 
 const page = () => {
+  const { user } = useContext(Context);
+
   return (
     <div>
-      <h1>name</h1>
-      <p>email</p>
+      <h1>{user.name}</h1>
+      <p>{user.email}</p>
     </div>
   );
 };
