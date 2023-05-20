@@ -1,6 +1,15 @@
-import React from "react";
+"use client"
+import React, { useState } from "react";
 
 const AddTodoForm = () => {
+
+  const [title, setTitle] = useState();
+  const [description, setDescription] = useState();
+  
+  const submitHandler = () => {
+    
+  };
+
   return (
     <div className="login">
       <section>
