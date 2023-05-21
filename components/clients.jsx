@@ -9,6 +9,7 @@ export const Context = createContext({ user: {} });
 
 export const ContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
+  const [taskReload, setTaskReload] = useState(false);
 
   useEffect(() => {
     axios
@@ -22,6 +23,8 @@ export const ContextProvider = ({ children }) => {
       value={{
         user,
         setUser,
+        taskReload,
+        setTaskReload,
       }}
     >
       {children}
@@ -56,11 +59,37 @@ export const LogoutBtn = () => {
   );
 };
 
-export const TodoButton = () => {
+export const TodoButton = ({ id, isCompleted }) => {
+  const { taskReload, setTaskReload } = useContext(Context);
+
+  const updateHandler = (id) => {
+    axios
+      .put(`/api/task/${id}`, { isCompleted: !isCompleted })
+      .then((res) => {
+        alert(res.data.message);
+        setTaskReload(!taskReload);
+      })
+      .catch((err) => alert(err.response.data.message));
+  };
+
+  const deleteHandler = (id) => {
+    axios
+      .delete(`/api/task/${id}`)
+      .then((res) => {
+        alert(res.data.message);
+        setTaskReload(!taskReload);
+      })
+      .catch((err) => alert(err.response.data.message));
+  };
+
   return (
     <>
-      <input type="checkbox" name="" id="" />
-      <button>Delete</button>
+      <input
+        type="checkbox"
+        onChange={() => updateHandler(id)}
+        checked={isCompleted}
+      />
+      <button onClick={() => deleteHandler(id)}>Delete</button>
     </>
   );
 };

@@ -4,7 +4,7 @@ import axios from "axios";
 import React, { useContext, useState } from "react";
 
 const AddTodoForm = () => {
-  const { user } = useContext(Context);
+  const { user, setTaskReload, taskReload } = useContext(Context);
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -12,8 +12,13 @@ const AddTodoForm = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     axios
-      .post(`/api/task/newtask`, { title, description, user: user._id })
-      .then((res) => alert(res.data.message))
+      .post(`/api/newtask`, { title, description, user: user._id })
+      .then((res) => {
+        alert(res.data.message);
+        setTaskReload(!taskReload);
+        setTitle("");
+        setDescription("");
+      })
       .catch((err) => alert(err.response.data.message));
   };
 

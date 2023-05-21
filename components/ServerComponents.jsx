@@ -1,7 +1,7 @@
 import React from "react";
 import { TodoButton } from "./clients";
 
-export const TodoItem = ({ title, description, id, completed }) => {
+export const TodoItem = ({ title, description, id, isCompleted }) => {
   return (
     <div className="todo">
       <div>
@@ -10,7 +10,7 @@ export const TodoItem = ({ title, description, id, completed }) => {
       </div>
 
       <div>
-        <TodoButton id={id} completed={completed} />
+        <TodoButton id={id} isCompleted={isCompleted} />
       </div>
     </div>
   );
