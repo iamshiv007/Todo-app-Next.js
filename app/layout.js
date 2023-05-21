@@ -1,5 +1,6 @@
 import { ContextProvider } from "@/components/clients"
 import Header from "./header"
+import "../styles/app.scss";
 
 export const metadata = {
   title: 'Todo App',

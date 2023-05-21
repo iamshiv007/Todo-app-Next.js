@@ -1,13 +1,20 @@
-"use client"
-import React, { useState } from "react";
+"use client";
+import { Context } from "@/components/clients";
+import axios from "axios";
+import React, { useContext, useState } from "react";
 
 const AddTodoForm = () => {
+  const { user } = useContext(Context);
 
-  const [title, setTitle] = useState();
-  const [description, setDescription] = useState();
-  
-  const submitHandler = () => {
-    
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    axios
+      .post(`/api/task/newtask`, { title, description, user: user._id })
+      .then((res) => alert(res.data.message))
+      .catch((err) => alert(err.response.data.message));
   };
 
   return (
