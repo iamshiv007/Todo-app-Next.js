@@ -4,7 +4,7 @@ import { Context } from "@/components/clients";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 
-const todos = () => {
+const Todos = () => {
   const [tasks, setTasks] = useState([]);
   const { taskReload } = useContext(Context);
 
@@ -34,4 +34,4 @@ const todos = () => {
   );
 };
 
-export default todos;
+export default Todos;

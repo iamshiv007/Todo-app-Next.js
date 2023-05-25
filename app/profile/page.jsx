@@ -2,7 +2,7 @@
 import { Context } from "@/components/clients";
 import React, { useContext } from "react";
 
-const page = () => {
+const Page = () => {
   const { user } = useContext(Context);
 
   return (
@@ -13,4 +13,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
